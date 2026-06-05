@@ -11,90 +11,92 @@
     <form id="survey-form">
         <p>Please answer the following questions about your team's psychological safety.</p>
         <p>For each statement, please select the option that best reflects your opinion.</p>
-    <ol>
-        <li>
-            <fieldset>
-                <legend>If you make a mistake on this team, it is often held against you.</legend>
-                
-                    <input type="radio" id="question1-option1" name="question1" value="1"><label for="question1-option1">Strongly Disagree</label>
-                    <input type="radio" id="question1-option2" name="question1" value="2"><label for="question1-option2">Disagree</label>
-                    <input type="radio" id="question1-option3" name="question1" value="3"><label for="question1-option3">Neutral</label>
-                    <input type="radio" id="question1-option4" name="question1" value="4"><label for="question1-option4">Agree</label>
-                    <input type="radio" id="question1-option5" name="question1" value="5"><label for="question1-option5">Strongly Agree</label>
+        <ol id="question-list"></ol>
 
-                </label>
-            </fieldset>
-        </li>
-        <li>
-            <fieldset>
-                <legend>Members of this team are able to bring up problems and tough issues.</legend>
-                
-                    <input type="radio" id="question2-option1" name="question2" value="1"><label for="question2-option1">Strongly Disagree</label>
-                    <input type="radio" id="question2-option2" name="question2" value="2"><label for="question2-option2">Disagree</label>
-                    <input type="radio" id="question2-option3" name="question2" value="3"><label for="question2-option3">Neutral</label>
-                    <input type="radio" id="question2-option4" name="question2" value="4"><label for="question2-option4">Agree</label>
-                    <input type="radio" id="question2-option5" name="question2" value="5"><label for="question2-option5">Strongly Agree</label>
+        <button type="submit">Submit</button>
+    </form>
 
-                </label>
-            </fieldset>
-            </li>
-            <li>
-            <fieldset>
-                <legend>People on this team sometimes reject others for being different.</legend>
-                
-                    <input type="radio" id="question3-option1" name="question3" value="1"><label for="question3-option1">Strongly Disagree</label>
-                    <input type="radio" id="question3-option2" name="question3" value="2"><label for="question3-option2">Disagree</label>
-                    <input type="radio" id="question3-option3" name="question3" value="3"><label for="question3-option3">Neutral</label>
-                    <input type="radio" id="question3-option4" name="question3" value="4"><label for="question3-option4">Agree</label>
-                    <input type="radio" id="question3-option5" name="question3" value="5"><label for="question3-option5">Strongly Agree</label>
+    <p id="sum"></p>
 
-                </label>
-            </fieldset> 
-            </li>
-        <li>
-            <fieldset>
-                <legend>It is safe to take a risk on this team.</legend>
-                
-                    <input type="radio" id="question4-option1" name="question4" value="1"><label for="question4-option1">Strongly Disagree</label>
-                    <input type="radio" id="question4-option2" name="question4" value="2"><label for="question4-option2">Disagree</label>
-                    <input type="radio" id="question4-option3" name="question4" value="3"><label for="question4-option3">Neutral</label>
-                    <input type="radio" id="question4-option4" name="question4" value="4"><label for="question4-option4">Agree</label>
-                    <input type="radio" id="question4-option5" name="question4" value="5"><label for="question4-option5">Strongly Agree</label>
+    <script>
+        const questions = [
+            {
+                text: 'If you make a mistake on this team, it is often held against you.',
+                scores: [7, 6, 5, 4, 3, 2, 1]
+            },
+            {
+                text: 'Members of this team are able to bring up problems and tough issues.',
+                scores: [1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+                text: 'People on this team sometimes reject others for being different.',
+                scores: [7, 6, 5, 4, 3, 2, 1]
+            },
+            {
+                text: 'It is safe to take a risk on this team.',
+                scores: [1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+                text: 'It is difficult to ask other members of this team for help.',
+                scores: [7, 6, 5, 4, 3, 2, 1]
+            },
+            {
+                text: 'No one on this team would deliberately act in a way that undermines my efforts.',
+                scores: [1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+                text: 'Working with members of this team, my unique skills and talents are valued and utilized.',
+                scores: [1, 2, 3, 4, 5, 6, 7]
+            }
+        ];
 
-                </label>
-            </fieldset>
-        </li>
-        <li>
-            <fieldset>
-                <legend>It is difficult to ask other members of this team for help.</legend>
-                
-                    <input type="radio" id="question5-option1" name="question5" value="1"><label for="question5-option1">Strongly Disagree</label>
-                    <input type="radio" id="question5-option2" name="question5" value="2"><label for="question5-option2">Disagree</label>
-                    <input type="radio" id="question5-option3" name="question5" value="3"><label for="question5-option3">Neutral</label>
-                    <input type="radio" id="question5-option4" name="question5" value="4"><label for="question5-option4">Agree</label>
-                    <input type="radio" id="question5-option5" name="question5" value="5"><label for="question5-option5">Strongly Agree</label>
+        const optionLabels = ['Strongly Disagree', 'Disagree', 'Slightly Disagree', 'Neutral', 'Slightly Agree', 'Agree', 'Strongly Agree'];
+        const form = document.getElementById('survey-form');
+        const questionList = document.getElementById('question-list');
+        const sumElement = document.getElementById('sum');
 
-                </label>
-            </fieldset>
-        </li>
-        <li>
-            <fieldset>
-                <legend>Working with members of this team, my unique skills and talents are valued and utilized.</legend>
-                
-                    <input type="radio" id="question6-option1" name="question6" value="1"><label for="question6-option1">Strongly Disagree</label>
-                    <input type="radio" id="question6-option2" name="question6" value="2"><label for="question6-option2">Disagree</label>
-                    <input type="radio" id="question6-option3" name="question6" value="3"><label for="question6-option3">Neutral</label>
-                    <input type="radio" id="question6-option4" name="question6" value="4"><label for="question6-option4">Agree</label>
-                    <input type="radio" id="question6-option5" name="question6" value="5"><label for="question6-option5">Strongly Agree</label>
+        questionList.innerHTML = questions
+            .map((question, questionIndex) => {
+                const questionNumber = questionIndex + 1;
+                const options = question.scores
+                    .map((score, optionIndex) => {
+                        const optionNumber = optionIndex + 1;
+                        const id = `question${questionNumber}-option${optionNumber}`;
 
-                </label>
-            </fieldset>
-        </li>
-    </ol>
+                        return `
+                            <label for="${id}">
+                                <input type="radio" id="${id}" name="question${questionNumber}" value="${score}">
+                                ${optionLabels[optionIndex]}
+                            </label>
+                        `;
+                    })
+                    .join('');
 
-    <button type="submit">Submit</button>
-    </form>xx
-    
+                return `
+                    <li>
+                        <fieldset>
+                            <legend>${question.text}</legend>
+                            <div class="question-options">
+                                ${options}
+                            </div>
+                        </fieldset>
+                    </li>
+                `;
+            })
+            .join('');
 
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let total = 0;
+            const formData = new FormData(form);
+
+            for (const value of formData.values()) {
+                total += parseInt(value, 10);
+            }
+
+            sumElement.textContent = 'Total: ' + total;
+        });
+    </script>
 </body>
 </html>
