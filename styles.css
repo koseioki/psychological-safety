@@ -15,9 +15,9 @@
     :root {
         --background: linear-gradient(#0d0b33 0%, #4c2f6f 100%);
         --text: #f4f4f4;
-        --white: #f4f4f4;
-        --green: #2f5d43;
-        --red: #70584c;
+        --white: #0d0b33;
+        --green: #b7d3c3;
+        --red: #f1dacf;
 
     }
 }
@@ -30,6 +30,7 @@ body {
     background: var(--background);
     color: var(--text);
     font-size: 1.18rem;
+    scroll-behavior: smooth;
 }
 
 .sr-only {
@@ -185,4 +186,27 @@ button {
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* visible option label text next to the radio visual */
+.option-label {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: inherit;
+}
+
+/* style for disabled fieldsets */
+fieldset.disabled {
+    opacity: 0.45;
+    filter: grayscale(20%);
+}
+
+/* smooth scroll behavior for the document */
+html {
+    scroll-behavior: smooth;
 }

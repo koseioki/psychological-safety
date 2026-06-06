@@ -68,7 +68,7 @@
                         return `
                             <label for="${id}">
                                 <input class="sr-only" type="radio" id="${id}" name="question${questionNumber}" value="${score}">
-                                <span class="sr-only">${optionLabels[optionIndex]}</span>
+                                <span class="option-label sr-only">${optionLabels[optionIndex]}</span>
                             </label>
                         `;
                     })
@@ -91,6 +91,49 @@
             })
             .join('');
 
+        // Enforce sequential answering:
+        (function enforceSequential() {
+            const fieldsets = Array.from(questionList.querySelectorAll('fieldset'));
+            const submitBtn = form.querySelector('button[type="submit"]');
+            function updateSubmitState() {
+                const allAnswered = fieldsets.every(fs => {
+                    const firstInput = fs.querySelector('input[type="radio"]');
+                    if (!firstInput) return false;
+                    return !!form.querySelector(`input[name="${firstInput.name}"]:checked`);
+                });
+                submitBtn.disabled = !allAnswered;
+            }
+
+            fieldsets.forEach((fs, idx) => {
+                const inputs = Array.from(fs.querySelectorAll('input[type="radio"]'));
+                if (idx > 0) {
+                    inputs.forEach(i => {
+                        i.disabled = true;
+                    });
+                    fs.classList.add('disabled');
+                }
+                inputs.forEach(i => i.addEventListener('change', () => {
+                    // enable next fieldset when current has any selection
+                    const name = i.name;
+                    if (form.querySelector(`input[name="${name}"]:checked`)) {
+                        const next = fieldsets[idx + 1];
+                        if (next) {
+                            next.classList.remove('disabled');
+                            Array.from(next.querySelectorAll('input[type="radio"]')).forEach(inp => inp.disabled = false);
+                            // scroll next into view and focus first input for keyboard users
+                            next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            const first = next.querySelector('input[type="radio"]');
+                            if (first) first.focus();
+                        }
+                    }
+                    updateSubmitState();
+                }));
+            });
+
+            // initialize submit state
+            updateSubmitState();
+        })();
+
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -101,7 +144,7 @@
                 total += parseInt(value, 10);
             }
 
-            sumElement.textContent = 'Total: ' + total;
+            sumElement.textContent = 'Total: ' + total + ' out of 49 (' + ((total / 49) * 100).toFixed(2) + '%)';
         });
     </script>
 </body>
