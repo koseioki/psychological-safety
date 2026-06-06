@@ -9,11 +9,13 @@
 <body>
     <h1>Team Psychological Safety</h1>
     <form id="survey-form">
+        <div class="instructions">
         <p>Please answer the following questions about your team's psychological safety.</p>
         <p>For each statement, please select the option that best reflects your opinion.</p>
+        </div>
         <ol id="question-list"></ol>
 
-        <button type="submit">Submit</button>
+        <button type="submit">See Results</button>
     </form>
 
     <p id="sum"></p>
@@ -65,8 +67,8 @@
 
                         return `
                             <label for="${id}">
-                                <input type="radio" id="${id}" name="question${questionNumber}" value="${score}">
-                                ${optionLabels[optionIndex]}
+                                <input class="sr-only" type="radio" id="${id}" name="question${questionNumber}" value="${score}">
+                                <span class="sr-only">${optionLabels[optionIndex]}</span>
                             </label>
                         `;
                     })
@@ -77,7 +79,11 @@
                         <fieldset>
                             <legend>${question.text}</legend>
                             <div class="question-options">
+                                <div>Disagree</div>
+                                <div class="radio-container">
                                 ${options}
+                                </div>
+                                <div>Agree</div>
                             </div>
                         </fieldset>
                     </li>
